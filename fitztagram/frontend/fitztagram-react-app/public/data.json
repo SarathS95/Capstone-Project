@@ -1,0 +1,11 @@
+{
+    "posts": [
+      { "id": 1, "username": "Sarath", "text": "Today was leg day, feeling strong!" },
+      { "id": 2, "username": "Alex", "text": "Morning cardio session done" },
+      { "id": 3, "username": "Emily", "text": "Loving the progress at the gym!"},
+      { "id": 4, "username": "Liam", "text": "New personal best on bench press today!" },
+      { "id": 5, "username": "Sophia", "text": "Rest day is just as important!" },
+      { "id": 6, "username": "Noah", "text": "Outdoor run completed in 25 minutes!" }
+    ]
+  }
+  
