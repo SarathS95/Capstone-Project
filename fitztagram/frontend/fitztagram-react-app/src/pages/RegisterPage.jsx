@@ -2,6 +2,8 @@ import { Avatar, Grid, Paper, TextField, Typography, Button, Link } from "@mui/m
 import React, { useState } from "react";
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt'; 
 import { useNavigate } from "react-router-dom";
+import  useUser  from "../hooks/useUser";
+
 
 function RegisterPage() {
     const [firstName, setFirstName] = useState('');
@@ -10,6 +12,7 @@ function RegisterPage() {
     const [userPassword, setUserPassword] = useState('');
     const [submitResult, setSubmitResult] = useState('');
     const navigate = useNavigate();
+    const { addUser } = useUser();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,6 +20,13 @@ function RegisterPage() {
         if (userPassword.length < 5) {
             setSubmitResult('Password must be at least 5 characters long');
         } else {
+            const newUser = {
+                username: `${firstName} ${lastName}`,
+                email: userEmail,
+                password: userPassword,
+                profilePicture: ""
+            };
+            addUser(newUser);
             setSubmitResult('Account created successfully!');
             navigate('/');
 }
