@@ -3,7 +3,14 @@
 const Models = require('../models');
 
 const getPost = (res) => {
-    Models.Post.findAll({}).then(data => {
+    Models.Post.findAll({
+      include: [
+        {
+        model: Models.User, attributes: ['username', 'profilePicture']
+      }
+],
+order: [[createdAt, 'DESC']]
+    }).then(data => {
         res.send({result:200, data: data});
     }).catch(err => {
         console.log(err);

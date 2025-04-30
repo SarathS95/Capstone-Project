@@ -1,17 +1,19 @@
 import {Avatar, Box, Button, Stack, TextField} from "@mui/material";
 import VideoCallIcon from '@mui/icons-material/VideoCall';
 import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
-import EmojiEnoticonsIcon from '@mui/icons-material/EmojiEmotions';
+import EmojiEmoticonsIcon from '@mui/icons-material/EmojiEmotions';
 import {useState} from "react";
 
-function Post() {
+function Post({onAddPost}) {
     const [postText, setPostText] = useState('');
 
     const handlePost = () => {
         if (postText.trim() === "")return;
 
-        console.log("Post created:", postText)
-        setPostText('');
+        const newPost = {
+            postContent: postText,
+            postImage: "",
+        }
     };
 
     return(
@@ -24,11 +26,11 @@ function Post() {
             <Stack direction="row" justifyContent="space-around" spacing={3}>
                 <Button startIcon={<VideoCallIcon sx={{color: 'red'}} />}>Post Video</Button>
                 <Button startIcon={<PhotoLibraryIcon sx={{color: 'red'}} />}>Post Image</Button>
-                <Button startIcon={<EmojiEnoticonsIcon sx={{color: 'orange'}} />}>Feelings</Button>
+                <Button startIcon={<EmojiEmoticonsIcon sx={{color: 'orange'}} />}>Feelings</Button>
             </Stack>
 
             <Box sx = {{display: 'flex', justifyContent: 'center', mt: 2}}>
-                <Button variant= "contained" color="primary" onclick={handlePost}>Post</Button>
+                <Button variant= "contained" color="primary" onClick={handlePost}>Post</Button>
             </Box>
         </Box>
     )

@@ -16,16 +16,25 @@ function PostContent() {
         });
     }, []);
 
+    const addPost =(newPost) => {
+        axios.post('http://localhost:8081/api/create', newPost)
+        .then(response => {
+            setPost(prev => [response.data.data, ...prev]);
+        }).catch (error => {
+            console.error('Error creating post:', error);
+        });
+    };
+
     return (
         <Box sx={{width: '100%'}}>
-            <Post />
+            <Post onAddPost={addPost} />
 
             <Box sx={{mt: 3}}>
                 {post.length === 0? (
-                    <Typography variant="body1" color="text.secondry">No Post</Typography>
+                    <Typography variant="body1" color="text.secondary">No Post</Typography>
                 ) : (
                     post.map((post) => (
-                        <PostCard key={post.id} username={`User ${post.userId}`} postText={post.postText} postImage={post.postImage} />
+                        <PostCard key={post.id} username={post.User?.username} profilePicture={post.User?.profilePicture} postContent={post.postContent} postImage={post.postImage} />
                     ))
                 )}
             </Box>
