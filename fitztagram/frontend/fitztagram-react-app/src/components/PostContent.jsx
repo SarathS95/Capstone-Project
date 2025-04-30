@@ -4,7 +4,7 @@ import Post from './Post';
 import PostCard from './PostCard';
 import axios from 'axios';
 
-function PostContent() {
+function PostContent({currentUser}) {
     const [post, setPost] = useState([]);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ function PostContent() {
     }, []);
 
     const addPost =(newPost) => {
-        axios.post('http://localhost:8081/api/create', newPost)
+        axios.post('http://localhost:8081/api/post/create', newPost)
         .then(response => {
             setPost(prev => [response.data.data, ...prev]);
         }).catch (error => {
@@ -27,14 +27,14 @@ function PostContent() {
 
     return (
         <Box sx={{width: '100%'}}>
-            <Post onAddPost={addPost} />
+            <Post onAddPost={addPost} currentUser={currentUser} />
 
             <Box sx={{mt: 3}}>
                 {post.length === 0? (
                     <Typography variant="body1" color="text.secondary">No Post</Typography>
                 ) : (
                     post.map((post) => (
-                        <PostCard key={post.id} username={post.User?.username} profilePicture={post.User?.profilePicture} postContent={post.postContent} postImage={post.postImage} />
+                        <PostCard key={post.id} username={post.user?.username || "Unknown"} profilePicture={post.user?.profilePicture ||""} postText={post.postText} postImage={post.postImage} />
                     ))
                 )}
             </Box>

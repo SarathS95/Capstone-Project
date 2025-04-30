@@ -2,6 +2,7 @@ import { Avatar, FormControlLabel, Grid, Paper, TextField, Typography, Button, L
 import React, { useState } from "react";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function LoginPage() {
     const [userEmail, setUserEmail] = useState('');
@@ -9,23 +10,30 @@ function LoginPage() {
     const [submitResult, setSubmitResult] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
         if (userPassword.length < 5) {
-            setSubmitResult('Password must be at least 5 characters long');
-        } else if (userPassword === userEmail) {
-            setSubmitResult('Password must not match email');
-        } else {
-            setSubmitResult('Successful login!');
-            navigate('/home');
+            setSubmitResult('Password must be at 5 characters long!');
+            return;
         }
-    };
+        try {
+            const response = await axios.get(`http://localhost:8081/api/user/email/${userEmail}`);
+            const user = response.data.data;
 
+            if (!user || user.password !== userPassword) {
+                setSubmitResult("Invalid email or Password");
+                return;
+            }
+            setSubmitResult("Login successful!");
+            navigate('/home', {state: {user}});
+        } catch (error) {
+            console.error('login error:', error);
+            setSubmitResult("User not found");
+        }
+    }
     const handleRegister = () => {
         navigate('/register');
-    };
-
+    }
     const paperStyle = { padding: 20, height: '75vh', width: 300, margin: '20px auto' };
     const avatarStyle = { backgroundColor: 'red' };
     const btnStyle = { margin: '10px 0' };

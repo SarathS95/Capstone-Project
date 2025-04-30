@@ -9,7 +9,7 @@ const getPost = (res) => {
         model: Models.User, attributes: ['username', 'profilePicture']
       }
 ],
-order: [[createdAt, 'DESC']]
+order: [['createdAt', 'DESC']]
     }).then(data => {
         res.send({result:200, data: data});
     }).catch(err => {
@@ -18,13 +18,23 @@ order: [[createdAt, 'DESC']]
     })
 }
 
-const createPost = (data, res) => {
-    Models.Post.create(data).then(data => {
-        res.send({result:200, data: data});
-    }).catch(err => {console.log(err);
-        res.send({result:500, error: err.message});
-    })
-}
+const createPost = async (data, res) => {
+  try {
+    const newPost = await Models.Post.create(data);
+    const fullPost = await Models.Post.findOne({
+      where: { id: newPost.id },
+      include: [
+        { model: Models.User, attributes: ['username', 'profilePicture'] }
+      ]
+    });
+
+    res.send({ result: 200, data: fullPost });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ result: 500, error: err.message });
+  }
+};
+
 
 const updatePost = (req, res) => {
     Models.Post.update(req.body, { where: { id: req.params.id }, 

@@ -11,6 +11,20 @@ const getUser = (res) => {
     })
 }
 
+const getUserByEmail = (email, res) => {
+  Models.User.findOne({ where: { email } })
+    .then(user => {
+      if (user) {
+        res.send({ result: 200, data: user });
+      } else {
+        res.status(404).send({ result: 404, error: "User not found" });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({ result: 500, error: err.message });
+    });
+};
+
 const createUser = (data, res) => {
     Models.User.create(data).then(data => {
         res.send({result:200, data: data});
@@ -41,5 +55,5 @@ const deleteUser = (req, res) => {
    };
 
 module.exports ={
-    getUser, createUser, updateUser, deleteUser
+    getUser, createUser, updateUser, deleteUser, getUserByEmail
 }

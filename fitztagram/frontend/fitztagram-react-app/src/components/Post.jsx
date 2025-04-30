@@ -4,16 +4,19 @@ import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import EmojiEmoticonsIcon from '@mui/icons-material/EmojiEmotions';
 import {useState} from "react";
 
-function Post({onAddPost}) {
+function Post({onAddPost, currentUser}) {
     const [postText, setPostText] = useState('');
 
     const handlePost = () => {
-        if (postText.trim() === "")return;
+        if (!currentUser || postText.trim() === "")return;
 
         const newPost = {
-            postContent: postText,
+            userId: currentUser.id,
+            postText: postText,
             postImage: "",
-        }
+        };
+        onAddPost(newPost);
+        setPostText('');
     };
 
     return(

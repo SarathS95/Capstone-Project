@@ -6,6 +6,10 @@ router.get('/populate', (req,res) => {
     Controllers.userController.populateUser(res);
 });
 
+router.get('/email/:email', (req, res) => {
+    const email = req.params.email;
+    Controllers.userController.getUserByEmail(email, res);
+});
 // Get request
 router.get('/', (req,res) => {
     Controllers.userController.getUser(res);
