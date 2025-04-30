@@ -34,7 +34,7 @@ function PostContent({currentUser}) {
                     <Typography variant="body1" color="text.secondary">No Post</Typography>
                 ) : (
                     post.map((post) => (
-                        <PostCard key={post.id} username={post.user?.username || "Unknown"} profilePicture={post.user?.profilePicture ||""} postText={post.postText} postImage={post.postImage} />
+                        <PostCard key={post.id} username={post.user?.username ||currentUser?.username} profilePicture={post.user?.profilePicture ||""} postText={post.postText} postImage={post.postImage} />
                     ))
                 )}
             </Box>

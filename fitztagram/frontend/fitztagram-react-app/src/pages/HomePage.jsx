@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 
 function HomePage() {
     const location = useLocation();
-    const currentUser = location.state || {};
+    const currentUser = location.state.user;
     console.log(currentUser)
     return (
         <>
