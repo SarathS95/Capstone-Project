@@ -15,6 +15,7 @@ function Post({onAddPost, currentUser}) {
             postText: postText,
             postImage: "",
         };
+        console.log('Submitting post:', newPost);
         onAddPost(newPost);
         setPostText('');
     };

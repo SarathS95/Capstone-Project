@@ -6,14 +6,15 @@ import { useLocation } from "react-router-dom";
 
 function HomePage() {
     const location = useLocation();
-    const user = location.state || {};
+    const currentUser = location.state || {};
+    console.log(currentUser)
     return (
         <>
         <NavBar />
 
         <Box sx ={{paddingTop: '90px'}}>
             <Container maxWidth="md">
-                <PostContent currentUser = {user} />
+                <PostContent currentUser = {currentUser} />
             </Container>
         </Box>
         </>
