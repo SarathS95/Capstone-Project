@@ -1,5 +1,6 @@
 import {Avatar, Box, Card, CardContent, CardMedia, Stack, Typography, Button, TextField} from "@mui/material";
 import {useState} from "react";
+import Comment from "./Comment";
 
 function PostCard({postId, userId,currentUser,username,profilePicture, postText, postImage, onDelete, onUpdate}) {
     const [edit, setEdit] = useState(false)
@@ -46,6 +47,7 @@ function PostCard({postId, userId,currentUser,username,profilePicture, postText,
                             <Button variant="outlined" size="small" color="error" onClick={handleDelete}>Delete</Button>
                     </Box>
                 )}
+                <Comment postId={postId} currentUser={currentUser} />
          </CardContent>
         </Card>
     )

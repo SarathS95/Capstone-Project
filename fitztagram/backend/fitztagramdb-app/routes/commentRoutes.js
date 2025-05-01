@@ -11,6 +11,10 @@ router.get('/', (req,res) => {
     Controllers.commentController.getComment(res);
 });
 
+router.get('/post/:postId', (req,res) => {
+    Controllers.commentController.getCommentByPostId(req,res);
+});
+
 // Post request
 router.post('/create', (req,res) => {
     Controllers.commentController.createComment(req.body, res);

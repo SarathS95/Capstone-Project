@@ -10,7 +10,18 @@ const getComment = (res) => {
         res.send ({result:500, error: err.message})
     })
 }
-
+const getCommentByPostId = (req, res) => {
+  Models.Comment.findAll ({
+    where: {postId: req.params.postId},
+    include: [{model: Models.User, attributes: ['username', 'profilePicture']}],
+    order: [['createdAt', 'DESC']]
+  })
+  .then(data => {
+    res.send({result:200, data: data});
+  }).catch(err => {
+    res.status(500).send({result:500, error: err.message})
+  })
+}
 const createComment = (data, res) => {
     Models.Comment.create(data).then(data => {
         res.send({result:200, data: data});
@@ -41,5 +52,5 @@ const deleteComment = (req, res) => {
    };
 
 module.exports ={
-    getComment, createComment, updateComment, deleteComment
+    getComment, createComment, updateComment, deleteComment, getCommentByPostId
 }
