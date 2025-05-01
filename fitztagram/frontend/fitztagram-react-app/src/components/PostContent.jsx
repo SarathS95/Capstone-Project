@@ -25,6 +25,24 @@ function PostContent({currentUser}) {
         });
     };
 
+    const updatePost = (postId, updateText) => {
+        axios.put(`http://localhost:8081/api/post/${postId}`, {postText: updateText})
+        .then(reponse => {
+            setPost(prev => prev.map(p => p.id === postId ? {...p, postText: updateText} : p));
+        }).catch(err => {
+            console.error("Error updating post:", err);
+        })
+    };
+
+    const deletePost = (postId) => {
+        axios.delete(`http://localhost:8081/api/post/${postId}`)
+        .then(() => {
+            setPost(prev => prev.filter(p => p.id !== postId))
+        }).catch (err => {
+            console.error('Error deleting post:', err)
+        })
+    }
+
     return (
         <Box sx={{width: '100%'}}>
             <Post onAddPost={addPost} currentUser={currentUser} />
@@ -34,7 +52,7 @@ function PostContent({currentUser}) {
                     <Typography variant="body1" color="text.secondary">No Post</Typography>
                 ) : (
                     post.map((post) => (
-                        <PostCard key={post.id} username={post.user?.username ||currentUser?.username} profilePicture={post.user?.profilePicture ||""} postText={post.postText} postImage={post.postImage} />
+                        <PostCard key={post.id} postId={post.id} userId={post.userId} currentUser={currentUser} username={post.user?.username ||currentUser?.username} profilePicture={post.user?.profilePicture ||""} postText={post.postText} postImage={post.postImage} onDelete={deletePost} onUpdate={updatePost} />
                     ))
                 )}
             </Box>
